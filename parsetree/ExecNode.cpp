@@ -12,5 +12,6 @@ public:
     virtual void run() {
         cout << "\n[DEBUG]: ExecNode.run(" << args[0] << ")" << endl;
         SystemCallWrapper::execvp_wrapper(args[0], args);
+        // exit(1);
     }
 };
