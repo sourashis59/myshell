@@ -58,10 +58,13 @@ public:
         if (pid == -1) panic("fork");
         return pid;
     }
-
-    static int wait_wrapper() {
+    
+    /*
+     * Returns exit status code of process with pid 
+     */
+    static int wait_wrapper(pid_t pid) {
         int status;
-        wait(&status);
+        waitpid(pid, &status, 0);
         // wait(0);
         return status;
     }

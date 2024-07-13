@@ -26,5 +26,6 @@ int main() {
     }
     
     outFile.close();
+    exit(1);
     return 0;
 }

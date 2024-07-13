@@ -44,10 +44,11 @@ void testBackground(Command *backgroundCmd) {
 }
 
 void testSeparator(Command *cmd) {
-    if (SystemCallWrapper::fork_wrapper() == 0)
+    pid_t pid = SystemCallWrapper::fork_wrapper(); 
+    if (pid == 0)
         cmd->run();
     
-    SystemCallWrapper::wait_wrapper();
+    SystemCallWrapper::wait_wrapper(pid);
 }
 
 int main() {
@@ -86,7 +87,10 @@ int main() {
     // lol
     Command *separatorNode4 = new SeparatorNode(separatorNode2, 
         new SeparatorNode(new ExecNode(ls_program), new SeparatorNode(new ExecNode({"ls"}), new ExecNode({"pwd"}))));
-    testSeparator(separatorNode4);
+    Command *separatorNode5 = new SeparatorNode(new ExecNode({"./test-programs/program_that_exits_with_error_status.out"}), new ExecNode(ls_program));
+    Command *separatorNode6 = new SeparatorNode(new BackgroundNode(new ExecNode({"test-programs/wait_and_print_hello.out"})), new ExecNode(ls_program));
+    
+    testSeparator(separatorNode6);
 
 
 }
