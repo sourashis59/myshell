@@ -65,7 +65,7 @@ int main() {
 
     //     pid = fork();
     //     if (pid == 0)
-    //         ExecNode(parseTokens(input)).run();
+    //         command.run();
         
     //     int status;
     //     waitpid(pid, &status, 0);
@@ -85,7 +85,7 @@ int main() {
     Command *separatorNode3 = new SeparatorNode(separatorNode2, new ExecNode(ls_program));
     // lol
     Command *separatorNode4 = new SeparatorNode(separatorNode2, 
-        new SeparatorNode(new ExecNode(ls_program), new ExecNode({"ls"})));
+        new SeparatorNode(new ExecNode(ls_program), new SeparatorNode(new ExecNode({"ls"}), new ExecNode({"pwd"}))));
     testSeparator(separatorNode4);
 
 

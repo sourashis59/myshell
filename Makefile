@@ -1,2 +1,2 @@
 all:
-	g++ *.cpp -o a.out
+	g++ *.cpp -o myshell.out
