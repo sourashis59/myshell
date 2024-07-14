@@ -93,13 +93,17 @@ int main() {
     
 
     Command *pipeCmd = new PipeNode(new ExecNode({"echo", "hello\nlol haha\nhelloWorld\nhelloLol\nlamao\nlol\nxd\nhahaha\nhelloEnd\n"}), new ExecNode({"grep", "hello"}));
-    // Command *pipeCmd = new PipeNode(new ExecNode({"echo", "helloWorld\n"}), new ExecNode({"grep", "hello\n"}));
+    Command *pipeCmd0 = new PipeNode(pipeCmd, new ExecNode({"grep", "helloW"}));
 
+    // Command *pipeCmd = new PipeNode(new ExecNode({"echo", "helloWorld\n"}), new ExecNode({"grep", "hello\n"}));
+    Command *pipeCmd1 = new PipeNode(new ExecNode({"./test-programs/test_echoer.out", "A"}), new ExecNode({"./test-programs/test_echoer.out", "B"}));
+    Command *pipeCmd2 = new PipeNode(pipeCmd1, new ExecNode({"./test-programs/test_echoer.out", "C"}));
+    
 
 
     // testCmd(new ExecNode({"echo", "hello"}));
     // testCmd(new ExecNode({"grep", "hello"}));
-    testCmd(pipeCmd);
+    testCmd(pipeCmd2);
 
 
 }
