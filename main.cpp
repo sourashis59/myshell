@@ -1,6 +1,7 @@
 #include "parsetree/ExecNode.cpp"
 #include "parsetree/BackgroundNode.cpp"
 #include "parsetree/SeparatorNode.cpp"
+#include "parsetree/PipeNode.cpp"
 
 
 #include<string>
@@ -43,7 +44,7 @@ void testBackground(Command *backgroundCmd) {
     printf("\nParent Process: Thank you!\n");
 }
 
-void testSeparator(Command *cmd) {
+void testCmd(Command *cmd) {
     pid_t pid = SystemCallWrapper::fork_wrapper(); 
     if (pid == 0)
         cmd->run();
@@ -90,7 +91,15 @@ int main() {
     Command *separatorNode5 = new SeparatorNode(new ExecNode({"./test-programs/program_that_exits_with_error_status.out"}), new ExecNode(ls_program));
     Command *separatorNode6 = new SeparatorNode(new BackgroundNode(new ExecNode({"test-programs/wait_and_print_hello.out"})), new ExecNode(ls_program));
     
-    testSeparator(separatorNode6);
+
+    Command *pipeCmd = new PipeNode(new ExecNode({"echo", "hello\nlol haha\nhelloWorld\nhelloLol\nlamao\nlol\nxd\nhahaha\nhelloEnd\n"}), new ExecNode({"grep", "hello"}));
+    // Command *pipeCmd = new PipeNode(new ExecNode({"echo", "helloWorld\n"}), new ExecNode({"grep", "hello\n"}));
+
+
+
+    // testCmd(new ExecNode({"echo", "hello"}));
+    // testCmd(new ExecNode({"grep", "hello"}));
+    testCmd(pipeCmd);
 
 
 }

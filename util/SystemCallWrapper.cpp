@@ -68,4 +68,14 @@ public:
         // wait(0);
         return status;
     }
+
+    /*
+     * Creates a pipe and returns the file descriptors {read end fd, write end fd}.
+     * Panics if any thing goes wrong.
+     */
+    static pair<int, int> pipe_wrapper() {
+        int pipeFds[2];
+        if (pipe(pipeFds) < 0) panic("pipe() sys call failed");
+        return pair<int,int>(pipeFds[0], pipeFds[1]);
+    }
 };
