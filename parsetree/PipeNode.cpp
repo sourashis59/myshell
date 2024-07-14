@@ -142,8 +142,9 @@ public:
         pid_t left_pid = SystemCallWrapper::fork_wrapper();
         if (left_pid == 0) {
             //* make STDOUT fd point to pipe write end
-            close(STDOUT_FILENO);
-            dup(pipe_write_fd); //* dup duplicates the file with the least available FD
+            // close(STDOUT_FILENO);
+            // dup(pipe_write_fd); //* dup duplicates the file with the least available FD
+            SystemCallWrapper::dup2_wrapper(pipe_write_fd, STDOUT_FILENO);
 
             //* For left command, pipe read end is not needed, so better close it.
             //* Also pipe's write end will not be used. The left process will write 
@@ -159,9 +160,10 @@ public:
         //* run right command
         pid_t right_pid = SystemCallWrapper::fork_wrapper();
         if (right_pid == 0) {
-            //* make std in point to pip read end
-            close(STDIN_FILENO);
-            dup(pipe_read_fd);
+            //* make std in fd point to pipe read end
+            // close(STDIN_FILENO);
+            // dup(pipe_read_fd);
+            SystemCallWrapper::dup2_wrapper(pipe_read_fd, STDIN_FILENO);
 
             //* For right process, pipe read end fd can be closed, because 
             //* this process will read from pipe read end via STDIN fd [because of dup]

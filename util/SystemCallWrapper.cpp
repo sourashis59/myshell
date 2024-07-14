@@ -78,4 +78,15 @@ public:
         if (pipe(pipeFds) < 0) panic("pipe() sys call failed");
         return pair<int,int>(pipeFds[0], pipeFds[1]);
     }
+
+    /*
+     * Duplicates the soource_fd to target_fd 
+     * [target_fd will point to same file pointed to by source_fd] 
+     * Example: to make STDIN_FILENO fd point to your custom FD,
+     *          use: dup2_wrapper(custom_fd, STDIN_FILENO)
+     * If dup2() sys call fails, panics!
+     */
+    static void dup2_wrapper(int source_fd, int target_fd) {
+        if (dup2(source_fd, target_fd) < 0) panic("dup2() sys call failed");
+    }
 };
