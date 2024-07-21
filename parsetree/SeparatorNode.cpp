@@ -29,7 +29,11 @@ public:
         }
         
         //* execute second command
-        rightCmd->run();
+        //*TODO: to support 'command ;' [2nd command is empty]
+        //*TODO: we need to check non-null
+        if (rightCmd != nullptr)
+            rightCmd->run();
+            
         exit(0);
     }
 };
