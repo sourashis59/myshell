@@ -1,5 +1,6 @@
 *.out
 ref.c
+ref1.c
 test-programs/test.txt
 test-programs/test1.txt
 .vscode

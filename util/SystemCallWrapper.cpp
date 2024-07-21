@@ -11,6 +11,7 @@
 
 using namespace std;
 
+//* Contains wrapper functions wrapping the glibc sys call wrapper functions
 class SystemCallWrapper {
     /*
      * Given vector of string objects, converts the string objects
