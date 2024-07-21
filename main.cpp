@@ -2,7 +2,7 @@
 #include "parsetree/BackgroundNode.cpp"
 #include "parsetree/SeparatorNode.cpp"
 #include "parsetree/PipeNode.cpp"
-
+#include "parser.cpp"
 
 #include<string>
 #include<sstream>
@@ -53,58 +53,63 @@ void testCmd(Command *cmd) {
 }
 
 int main() {
-    // string input;
-    // int pid;
-    // while (true) {
-    //     cout << "[basic-shell]$ ";
-    //     cout.flush();
-    //     getline(cin, input);
-    //     if (input == "exit") 
-    //         exit(0);
+    string input;
+    int pid;
+    while (true) {
+        cout << "[myshell]$ ";
+        cout.flush();
+        getline(cin, input);
+        if (input == "exit") 
+            exit(0);
         
-    //     // parse command 
-    //     // Command *command = parse(input);
+        // parse command 
+        Command *command = Parser(input).parse();
 
-    //     pid = fork();
-    //     if (pid == 0)
-    //         command.run();
+        cout << "\nparse tree: ";
+        command->print();
+        cout << endl;
+
+        pid = fork();
+        if (pid == 0)
+            command->run();
         
-    //     int status;
-    //     waitpid(pid, &status, 0);
-    // }
+        int status;
+        waitpid(pid, &status, 0);
+    }
 
 
 
-    vector<string> ls_program = {"ls", "./parsetree", "-l"};
-    vector<string> wait_and_print_program = {"test-programs/wait_and_print_hello.out"};
-    vector<string> wait_and_print_program1 = {"test-programs/wait_and_print_hello1.out"};
+    // vector<string> ls_program = {"ls", "./parsetree", "-l"};
+    // vector<string> wait_and_print_program = {"test-programs/wait_and_print_hello.out"};
+    // vector<string> wait_and_print_program1 = {"test-programs/wait_and_print_hello1.out"};
 
-    Command *backgroundCmd = new BackgroundNode(new ExecNode(wait_and_print_program));
-    Command *backgroundCmd1 = new BackgroundNode(new ExecNode(wait_and_print_program1));
-    Command *separatorNode = new SeparatorNode(backgroundCmd, new ExecNode(ls_program));
-    Command *separatorNode1 = new SeparatorNode(backgroundCmd, backgroundCmd1);
-    Command *separatorNode2 = new SeparatorNode(backgroundCmd, backgroundCmd);
-    Command *separatorNode3 = new SeparatorNode(separatorNode2, new ExecNode(ls_program));
-    // lol
-    Command *separatorNode4 = new SeparatorNode(separatorNode2, 
-        new SeparatorNode(new ExecNode(ls_program), new SeparatorNode(new ExecNode({"ls"}), new ExecNode({"pwd"}))));
-    Command *separatorNode5 = new SeparatorNode(new ExecNode({"./test-programs/program_that_exits_with_error_status.out"}), new ExecNode(ls_program));
-    Command *separatorNode6 = new SeparatorNode(new BackgroundNode(new ExecNode({"test-programs/wait_and_print_hello.out"})), new ExecNode(ls_program));
+    // Command *backgroundCmd = new BackgroundNode(new ExecNode(wait_and_print_program));
+    // Command *backgroundCmd1 = new BackgroundNode(new ExecNode(wait_and_print_program1));
+    // Command *separatorNode = new SeparatorNode(backgroundCmd, new ExecNode(ls_program));
+    // Command *separatorNode1 = new SeparatorNode(backgroundCmd, backgroundCmd1);
+    // Command *separatorNode2 = new SeparatorNode(backgroundCmd, backgroundCmd);
+    // Command *separatorNode3 = new SeparatorNode(separatorNode2, new ExecNode(ls_program));
+    // // lol
+    // Command *separatorNode4 = new SeparatorNode(separatorNode2, 
+    //     new SeparatorNode(new ExecNode(ls_program), new SeparatorNode(new ExecNode({"ls"}), new ExecNode({"pwd"}))));
+    // Command *separatorNode5 = new SeparatorNode(new ExecNode({"./test-programs/program_that_exits_with_error_status.out"}), new ExecNode(ls_program));
+    // Command *separatorNode6 = new SeparatorNode(new BackgroundNode(new ExecNode({"test-programs/wait_and_print_hello.out"})), new ExecNode(ls_program));
     
 
-    Command *pipeCmd = new PipeNode(new ExecNode({"echo", "hello\nlol haha\nhelloWorld\nhelloLol\nlamao\nlol\nxd\nhahaha\nhelloEnd\n"}), new ExecNode({"grep", "hello"}));
-    Command *pipeCmd0 = new PipeNode(pipeCmd, new ExecNode({"grep", "helloW"}));
+    // Command *pipeCmd = new PipeNode(new ExecNode({"echo", "hello\nlol haha\nhelloWorld\nhelloLol\nlamao\nlol\nxd\nhahaha\nhelloEnd\n"}), new ExecNode({"grep", "hello"}));
+    // Command *pipeCmd0 = new PipeNode(pipeCmd, new ExecNode({"grep", "helloW"}));
 
-    // Command *pipeCmd = new PipeNode(new ExecNode({"echo", "helloWorld\n"}), new ExecNode({"grep", "hello\n"}));
-    Command *pipeCmd1 = new PipeNode(new ExecNode({"./test-programs/test_echoer.out", "A"}), new ExecNode({"./test-programs/test_echoer.out", "B"}));
-    Command *pipeCmd2 = new PipeNode(pipeCmd1, new ExecNode({"./test-programs/test_echoer.out", "C"}));
+    // // Command *pipeCmd = new PipeNode(new ExecNode({"echo", "helloWorld\n"}), new ExecNode({"grep", "hello\n"}));
+    // Command *pipeCmd1 = new PipeNode(new ExecNode({"./test-programs/test_echoer.out", "A"}), new ExecNode({"./test-programs/test_echoer.out", "B"}));
+    // Command *pipeCmd2 = new PipeNode(pipeCmd1, new ExecNode({"./test-programs/test_echoer.out", "C"}));
     
 
 
-    // testCmd(new ExecNode({"echo", "hello"}));
-    // testCmd(new ExecNode({"grep", "hello"}));
-    testCmd(pipeCmd2);
+    // // testCmd(new ExecNode({"echo", "hello"}));
+    // // testCmd(new ExecNode({"grep", "hello"}));
+    // testCmd(pipeCmd2);
 
 
 }
 
+// ls -l|grep out >> test_output.txt

@@ -36,4 +36,12 @@ public:
             
         exit(0);
     }
+
+    virtual void print() {
+        cout << "(";
+        leftCmd->print();
+        cout << ";";
+        rightCmd->print();
+        cout << ")";
+    }
 };

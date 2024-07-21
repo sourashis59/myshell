@@ -255,20 +255,31 @@ private:
 
 
 
-int main() {
-    Lexer lexer;
-
-    // string input = "echo \"Hello world!!!!1242797!@#\\\"wad\\\"$6189247273|>><<??\"12_abcd-123_lol___3|<&&&-awd";
-    string input = "1aw-+-2=--=-13|12\"1231231241243kl;ksdlf-=\"&&  \n;;     & 123";
+// int main() {
+//     string input = "echo Hello   |   grep test";
     
-    queue<Token> q = lexer.tokenize(input);
-    cout << "\ninput: " << input << endl << endl;
-    while (q.size()) {
-        Token token = q.front();
-        q.pop();
-        cout << "\"" << token.value << "\"" << endl;
-    }
-}
+//     Command* root = Parser(input).parse();
+//     root->print();
+//     root->run();
+
+//     cout << endl;
+//     return 0;
+// }
+
+// int main() {
+//     Lexer lexer;
+
+//     // string input = "echo \"Hello world!!!!1242797!@#\\\"wad\\\"$6189247273|>><<??\"12_abcd-123_lol___3|<&&&-awd";
+//     string input = "1aw-+-2=--=-13|12\"1231231241243kl;ksdlf-=\"&&  \n;;     & 123";
+    
+//     queue<Token> q = lexer.tokenize(input);
+//     cout << "\ninput: " << input << endl << endl;
+//     while (q.size()) {
+//         Token token = q.front();
+//         q.pop();
+//         cout << "\"" << token.value << "\"" << endl;
+//     }
+// }
 
 
 

@@ -23,4 +23,11 @@ public:
         //* will wait for the child to finish before exiting
         exit(0);
     }
+
+    virtual void print() {
+        cout << "(";
+        cmd->print();
+        cout << "&";
+        cout << ")";
+    }
 };

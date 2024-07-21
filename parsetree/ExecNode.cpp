@@ -14,4 +14,11 @@ public:
         SystemCallWrapper::execvp_wrapper(args[0], args);
         // exit(1);
     }
+
+    virtual void print() {
+        cout << "(";
+        for (const auto &str: args)
+            cout << str << " ";
+        cout << ")";
+    }
 };

@@ -194,4 +194,13 @@ public:
             exit(1);
         } 
     }
+
+    
+    virtual void print() {
+        cout << "(";
+        left_cmd->print();
+        cout << "|";
+        right_cmd->print();
+        cout << ")";
+    }
 };

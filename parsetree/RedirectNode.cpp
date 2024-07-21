@@ -36,5 +36,18 @@ public:
         if (cmd == nullptr) throw runtime_error("Redirect node's command is null!");
     }
 
+
+    virtual void print() {
+        cout << "(";
+        cmd->print();
+
+        if (redir_type == RedirectType::IN) cout << " <";
+        else if (redir_type == RedirectType::OUT) cout << " >";
+        else /*if (redir_type == RedirectType::OUT_APPEND)*/ cout << " >>";
+        
+        cout << " " << file_path;
+
+        cout << ")";
+    }
     
 };
