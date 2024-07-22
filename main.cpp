@@ -2,7 +2,7 @@
 #include "parsetree/BackgroundNode.cpp"
 #include "parsetree/SeparatorNode.cpp"
 #include "parsetree/PipeNode.cpp"
-#include "parser.cpp"
+#include "util/parser.cpp"
 
 #include<string>
 #include<sstream>
@@ -63,7 +63,7 @@ int main() {
             exit(0);
         
         // parse command 
-        Command *command = Parser(input).parse();
+        Command *command = Parser::parse(input);
 
         cout << "\nparse tree: ";
         command->print();
