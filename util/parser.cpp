@@ -1,6 +1,51 @@
 #pragma once
 #include "lexer.cpp"
 
+/**
+ * Documentation:
+ * Parser uses lexer to get the stream of tokens. And parses the tokens and returns parse tree.
+ * 
+ * In this shell, operator precedence:
+ * 1. Parenthesis: '(' and ')'
+ * 2. I/O redirection: '>' and '<' and '>>'
+ * 3. Pipe: '|'
+ * 4. Background: '&'
+ * 
+ * Example: 
+ *      Command: echo Hello | grep He & ; cat test.txt
+ *      Parse tree: ((((echo Hello )|(grep He ))&);(cat test.txt ))
+ * 
+ * Note: [Difference from bash]
+ * - bash parses `cmd1 & cmd2` as (((cmd1)&);(cmd2)), and does not support `cmd1 & ; cmd2`
+ * - this shell parses `cmd1 & ; cmd2` to same parse tree but does not support `cmd1 & cmd2`
+ * 
+ * 
+ * ------------------------
+ * Grammar Rules:
+ * ------------------------
+ * LINE --> null
+ *      or, BACK
+ *      or, BACK ';' LINE
+ * 
+ * BACK --> PIPE '&'
+ *      or, PIPE
+ * 
+ * PIPE --> EXEC '|' PIPE
+ *      or, EXEC
+ * 
+ * EXEC --> '(' LINE ')' REDIRECTS
+ *      or, COMMANDARGS REDIRECTS
+ * 
+ * REDIRECTS --> null
+ *           or, '<' FILEPATH
+ *           or, '>' FILEPATH
+ *           or, '>>' FILEPATH 
+ * 
+ * COMMANDARGS --> {token with supported characters for word}
+ * 
+ * 
+ * 
+ */
 class Parser {
     class ParserUtil {
         queue<Token> q;
@@ -92,6 +137,46 @@ class Parser {
             return new ExecNode(args);
         }
 
+
+        /**
+         * TODO: do it recursively (please)
+         * 
+         * 
+         * (For now) this function returns start and end node of a linked list 
+         * [the last redirection has higher priority. It will overwrite previous same type redirection (if any)]
+         * 
+         * Example tokens:  
+         *      > file1      < file2         >> file3        >> file 4 
+         *       red1          red2           red3            red4
+         * 
+         * Output parse tree [linked list]:
+         *      ________ 
+         *      | red1 |
+         *      |------|    ==> start
+         *      ----|---
+         *          |
+         *          V
+         *      ________ 
+         *      | red2 |
+         *      |------|
+         *      ----|---
+         *          |
+         *          V
+         *      ________ 
+         *      | red3 |
+         *      |------|
+         *      ----|---
+         *          |
+         *          V
+         *      ________ 
+         *      | red4 |
+         *      |------|    ==> end
+         *      ----|---
+         *          |
+         *          V
+         *       nullptr
+         * 
+         */
         pair<RedirectNode*, RedirectNode*> parse_redirects() {
             RedirectNode* start_node = nullptr;
             RedirectNode* end_node = nullptr;
