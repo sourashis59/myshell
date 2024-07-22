@@ -1,6 +1,7 @@
 #pragma once
 #include "Command.cpp"
 #include "../util/SystemCallWrapper.cpp"
+#include "../config.cpp"
 
 
 class SeparatorNode: public Command {
@@ -11,7 +12,9 @@ public:
     SeparatorNode(Command *leftCmd, Command *rightCmd): leftCmd(leftCmd), rightCmd(rightCmd) {}
 
     virtual void run() {
-        cout << "\n[DEBUG]: SeparatorNode.run()" << endl;
+        if (Config::get_instance().get_debug_mode() == true) {
+            cout << "\n[DEBUG]: SeparatorNode.run()" << endl;
+        }
 
         //* Create a child process and run the first command.
         //* Creating new process is required, otherwise files descriptors of 

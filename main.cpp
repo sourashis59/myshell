@@ -3,6 +3,7 @@
 #include "parsetree/SeparatorNode.cpp"
 #include "parsetree/PipeNode.cpp"
 #include "util/parser.cpp"
+#include "config.cpp"
 
 #include<string>
 #include<sstream>
@@ -53,6 +54,9 @@ void testCmd(Command *cmd) {
 }
 
 int main() {
+    //*TODO:
+    Config::get_instance().set_debug_mode(false);
+    
     string input;
     int pid;
     while (true) {
@@ -65,9 +69,11 @@ int main() {
         // parse command 
         Command *command = Parser::parse(input);
 
-        cout << "\nparse tree: ";
-        command->print();
-        cout << endl;
+        if (Config::get_instance().get_debug_mode() == true) {
+            cout << "\nparse tree: ";
+            command->print();
+            cout << endl;
+        }
 
         pid = fork();
         if (pid == 0)

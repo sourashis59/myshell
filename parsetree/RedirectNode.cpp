@@ -1,6 +1,7 @@
 #pragma once
 #include "Command.cpp"
 #include "../util/SystemCallWrapper.cpp"
+#include "../config.cpp"
 
 
 
@@ -28,8 +29,10 @@ public:
     }
 
     virtual void run() {
-        cout << "\n[DEBUG]: RedirectNode.run(file_path= " << file_path << ", redir_type: " << redir_type << ")" << endl; 
-
+        if (Config::get_instance().get_debug_mode() == true) {
+            cout << "\n[DEBUG]: RedirectNode.run(file_path= " << file_path << ", redir_type: " << redir_type << ")" << endl; 
+        }
+        
         int target_fd = -1;
         int source_fd = -1;
         //* TODO: 0644 mode may not be required. Recheck!

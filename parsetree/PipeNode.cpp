@@ -1,6 +1,7 @@
 #pragma once
 #include "Command.cpp"
 #include "../util/SystemCallWrapper.cpp"
+#include "../config.cpp"
 
 
 class PipeNode: public Command {
@@ -132,7 +133,9 @@ public:
      * 
      */
     virtual void run() {
-        cout << "\n[DEBUG]: PipeNode.run()" << endl;
+        if (Config::get_instance().get_debug_mode() == true) {
+            cout << "\n[DEBUG]: PipeNode.run()" << endl;
+        }
 
         pair<int, int> pipe_fds = SystemCallWrapper::pipe_wrapper();
         int pipe_read_fd = pipe_fds.first;
@@ -190,7 +193,9 @@ public:
         if (left_status == 0 && right_status == 0) { 
             exit(0);
         } else {
-            cerr << "\n[ERROR]: pipe operator's operands did not exit properly. Left Status: " << left_status << ", Right Status: " << right_status << endl;
+            if (Config::get_instance().get_debug_mode() == true) {
+                cerr << "\n[ERROR]: pipe operator's operands did not exit properly. Left Status: " << left_status << ", Right Status: " << right_status << endl;
+            }
             exit(1);
         } 
     }

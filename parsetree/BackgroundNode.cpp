@@ -1,7 +1,7 @@
 #pragma once
 #include "Command.cpp"
 #include "../util/SystemCallWrapper.cpp"
-
+#include "../config.cpp"
 
 class BackgroundNode: public Command {
     Command *cmd; 
@@ -10,7 +10,9 @@ public:
     BackgroundNode(Command *cmd): cmd(cmd) {}
 
     virtual void run() {
-        cout << "\n[DEBUG]: BackgroundNode.run()" << endl;
+        if (Config::get_instance().get_debug_mode() == true) {
+            cout << "[DEBUG]: BackgroundNode.run()" << endl;
+        }
 
         //* child process will execute the command (may be composite command)
         if (SystemCallWrapper::fork_wrapper() == 0)
