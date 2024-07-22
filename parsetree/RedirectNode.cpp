@@ -28,14 +28,29 @@ public:
     }
 
     virtual void run() {
-        //*TODO:
-        // cout << "\n[DEBUG]: RedirectNode.run(" << args[0] << ")" << endl;
-        // SystemCallWrapper::execvp_wrapper(args[0], args);
-        // // exit(1);
+        cout << "\n[DEBUG]: RedirectNode.run(file_path= " << file_path << ", redir_type: " << redir_type << ")" << endl; 
+
+        int target_fd = -1;
+        int source_fd = -1;
+        //* TODO: 0644 mode may not be required. Recheck!
+        if (redir_type == RedirectType::IN) {
+            target_fd = SystemCallWrapper::open_wrapper(file_path, O_RDONLY);
+            source_fd = STDIN_FILENO;
+        } else if (redir_type == RedirectType::OUT) { 
+            target_fd = SystemCallWrapper::open_wrapper(file_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+            source_fd = STDOUT_FILENO;
+        } else /*if (redir_type == RedirectType::OUT_APPEND)*/ {
+            target_fd = SystemCallWrapper::open_wrapper(file_path, O_WRONLY | O_CREAT | O_APPEND, 0644);
+            source_fd = STDOUT_FILENO;
+        } 
+
+        SystemCallWrapper::dup2_wrapper(target_fd, source_fd);
+        SystemCallWrapper::close_wrapper(target_fd);
 
         if (cmd == nullptr) throw runtime_error("Redirect node's command is null!");
+        cmd->run();
+        exit(1);
     }
-
 
     virtual void print() {
         cout << "(";
@@ -44,9 +59,7 @@ public:
         if (redir_type == RedirectType::IN) cout << " <";
         else if (redir_type == RedirectType::OUT) cout << " >";
         else /*if (redir_type == RedirectType::OUT_APPEND)*/ cout << " >>";
-        
         cout << " " << file_path;
-
         cout << ")";
     }
     

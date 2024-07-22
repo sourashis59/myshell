@@ -79,6 +79,14 @@ int main() {
 
 
 
+    // Command* cmd = new PipeNode(
+    //     new RedirectNode(RedirectType::OUT_APPEND, "test.txt", 
+    //         new ExecNode({"echo", "hello world"})
+    //     ),
+    //     new ExecNode({"grep", ""})
+    // );
+
+    // cmd->run();
     // vector<string> ls_program = {"ls", "./parsetree", "-l"};
     // vector<string> wait_and_print_program = {"test-programs/wait_and_print_hello.out"};
     // vector<string> wait_and_print_program1 = {"test-programs/wait_and_print_hello1.out"};

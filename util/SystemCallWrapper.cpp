@@ -8,6 +8,7 @@
 #include<unistd.h>
 #include <sys/types.h>
 #include<sys/wait.h>
+#include <fcntl.h>
 
 using namespace std;
 
@@ -89,5 +90,27 @@ public:
      */
     static void dup2_wrapper(int source_fd, int target_fd) {
         if (dup2(source_fd, target_fd) < 0) panic("dup2() sys call failed");
+    }
+
+    /*
+     * Opens file and returns the file descriptor.
+     * If open() sys call fails, panics!
+     * 
+     * - file_path: path of the file to be opened
+     * - flag: O_WRONLY, O_CREAT, O_TRUNC
+     * - mode: permission mode
+     */
+    static int open_wrapper(const string &file_path, int flag, int mode = 0644) {
+        int new_fd = open(file_path.c_str(), flag, mode); 
+        if (new_fd < 0) panic("open() sys call failed for file: " + file_path);
+        return new_fd;
+    }
+    
+    /*
+     * Closes the given file descriptor.
+     * If close() sys call fails, panics! 
+     */
+    static void close_wrapper(int fd) {
+        if (close(fd) < 0) panic("close() sys call faield!");
     }
 };
