@@ -22,36 +22,36 @@ using namespace std;
 
 
 
-vector<string> parseTokens(const string &str) {
-    stringstream ss(str);
-    vector<string> res;
-    string token;
-    while (ss >> token) {
-        res.push_back(token);
-    }
-    return res;
-}
+// vector<string> parseTokens(const string &str) {
+//     stringstream ss(str);
+//     vector<string> res;
+//     string token;
+//     while (ss >> token) {
+//         res.push_back(token);
+//     }
+//     return res;
+// }
 
 
-void testBackground(Command *backgroundCmd) {
-    //* TEST background
-    if (SystemCallWrapper::fork_wrapper() == 0) {
-        // if (SystemCallWrapper::fork_wrapper() == 0) 
-        backgroundCmd->run();
+// void testBackground(Command *backgroundCmd) {
+//     //* TEST background
+//     if (SystemCallWrapper::fork_wrapper() == 0) {
+//         // if (SystemCallWrapper::fork_wrapper() == 0) 
+//         backgroundCmd->run();
 
-        // (new ExecNode(ls_program))->run();
-    }
-    this_thread::sleep_for(chrono::seconds(5));
-    printf("\nParent Process: Thank you!\n");
-}
+//         // (new ExecNode(ls_program))->run();
+//     }
+//     this_thread::sleep_for(chrono::seconds(5));
+//     printf("\nParent Process: Thank you!\n");
+// }
 
-void testCmd(Command *cmd) {
-    pid_t pid = SystemCallWrapper::fork_wrapper(); 
-    if (pid == 0)
-        cmd->run();
+// void testCmd(Command *cmd) {
+//     pid_t pid = SystemCallWrapper::fork_wrapper(); 
+//     if (pid == 0)
+//         cmd->run();
     
-    SystemCallWrapper::wait_wrapper(pid);
-}
+//     SystemCallWrapper::wait_wrapper(pid);
+// }
 
 int main() {
     //*TODO:
@@ -70,7 +70,7 @@ int main() {
         Command *command = Parser::parse(input);
 
         if (Config::get_instance().get_debug_mode() == true) {
-            cout << "\nparse tree: ";
+            cout << "parse tree: ";
             command->print();
             cout << endl;
         }
@@ -81,6 +81,10 @@ int main() {
         
         int status;
         waitpid(pid, &status, 0);
+
+        if (Config::get_instance().get_debug_mode() == true) {
+            cout << "\nAll child processes finished.\n";
+        }
     }
 
 

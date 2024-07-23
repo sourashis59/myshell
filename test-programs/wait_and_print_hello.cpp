@@ -19,7 +19,7 @@ int main() {
         this_thread::sleep_for(chrono::seconds(1));
     
         outFile << "Hello: " << i << endl;
-        // cout << "Hello: " << i << endl;
+        cout << "Hello: " << i << endl;
     
         outFile.flush();
         cout.flush();

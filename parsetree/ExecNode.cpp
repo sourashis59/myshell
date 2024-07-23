@@ -15,7 +15,7 @@ public:
 
     virtual void run() {
         if (Config::get_instance().get_debug_mode() == true) {
-            cout << "[DEBUG]: ExecNode.run(" << endl;    
+            cout << "[DEBUG]: ExecNode.run(";    
             for (const string& arg: args)
                 cout << arg << " ";
             cout << ")" << endl;
