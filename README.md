@@ -24,14 +24,14 @@
     ### Example:
     - Command: `(cmd1 | cmd2 | cmd3) < myFile.txt | cmd4; cmd7 &; cmd5 | cmd6`
     - Parse tree: ` (((((cmd1 )|((cmd2 )|(cmd3 ))) < myFile.txt)|(cmd4 ));(((cmd7 )&);((cmd5 )|(cmd6 ))))`
-    - Parse tree image: [click on the image to zoom in]
+    
         <img src="readme-files/parsetree2..png">
 
     - Parse tree will be traversed in preorder manner and each operator and exec nodes will be executed accordingly.
-    - Flow:
+    - Flow: [click on the image to zoom in]
         - `pread`: pipe read end
         - `pwrite`: pipe write end
-
+          
         <img src="readme-files/shell_flow.png">
 
 ## Files:
