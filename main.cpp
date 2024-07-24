@@ -3,7 +3,7 @@
 #include "parsetree/SeparatorNode.cpp"
 #include "parsetree/PipeNode.cpp"
 #include "util/parser.cpp"
-#include "config.cpp"
+#include "config.h"
 
 #include<string>
 #include<sstream>
@@ -22,12 +22,20 @@ using namespace std;
 
 
 int main() {
-    Config::get_instance().set_debug_mode(true);
+    Config::get_instance().debug_mode = false;
     
     string input;
     int pid;
     while (true) {
-        cout << "[myshell:" << SystemCallWrapper::getcwd_wrapper() << "]$ ";
+        //* print shell prompt
+        cout << Config::get_instance().prompt_color_code
+            << "[myshell:" 
+            << Config::get_instance().prompt_cwd_color_code
+            << SystemCallWrapper::getcwd_wrapper() 
+            << Config::get_instance().prompt_color_code
+            << "]$ "
+            << Config::PROMPT_COLOR_CODE[Config::PROMPT_COLOR::DEFAULT];
+
         cout.flush();
         getline(cin, input);
         if (input == "exit") 
@@ -36,7 +44,7 @@ int main() {
         // parse command 
         Command *command = Parser::parse(input);
 
-        if (Config::get_instance().get_debug_mode() == true) {
+        if (Config::get_instance().debug_mode == true) {
             cout << "parse tree: ";
             command->print();
             cout << endl;
@@ -49,7 +57,7 @@ int main() {
         int status;
         waitpid(pid, &status, 0);
 
-        if (Config::get_instance().get_debug_mode() == true) {
+        if (Config::get_instance().debug_mode == true) {
             cout << "\nAll child processes finished.\n";
         }
     }

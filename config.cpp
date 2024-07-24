@@ -1,36 +1,38 @@
-#pragma once
-using namespace std;
+#include "config.h"
 
-//* singleton
-class Config {
-    bool debug_mode;
 
-public:
-    static Config& get_instance() {
-        //* Static instance created once
-        static Config instance; 
-        return instance;
-    }
-
-    int get_debug_mode() const {
-        return debug_mode;
-    }
-
-    void set_debug_mode(bool mode) {
-        debug_mode = mode;
-    }
-
-private:
-    //* Private constructor and destructor to prevent instantiation
-    Config() {
-        //* Default debug mode is off
-        debug_mode = false; 
-    }
-
-    //* Private destructor
-    ~Config() {} 
-    
-    //* Private copy constructor and assignment operator to prevent copying
-    Config(const Config&) = delete;
-    Config& operator=(const Config&) = delete;
+unordered_map<Config::PROMPT_COLOR, string> Config::PROMPT_COLOR_CODE = {
+    {DEFAULT, "\033[0m"},    
+    {GREEN, "\033[32m"},   
+    {BLUE, "\033[34m"},    
+    {RED, "\033[31m"},     
+    {YELLOW, "\033[33m"},  
+    {MAGENTA, "\033[35m"}, 
+    {CYAN, "\033[36m"},    
+    {WHITE, "\033[37m"},   
+    {GRAY, "\033[90m"},    
+    {LIGHT_RED, "\033[91m"},  
+    {LIGHT_GREEN, "\033[92m"},
+    {LIGHT_YELLOW, "\033[93m"},
+    {LIGHT_BLUE, "\033[94m"}, 
+    {LIGHT_MAGENTA, "\033[95m"},
+    {LIGHT_CYAN, "\033[96m"}, 
+    {LIGHT_WHITE, "\033[97m"} 
 };
+
+Config& Config::get_instance() {
+    //* Static instance created once
+    static Config instance; 
+    return instance;
+}
+
+Config::Config() {
+    //* default
+    debug_mode = false;
+    prompt_color_code = Config::PROMPT_COLOR_CODE[PROMPT_COLOR::LIGHT_CYAN];
+    prompt_cwd_color_code = Config::PROMPT_COLOR_CODE[PROMPT_COLOR::LIGHT_GREEN];
+}
+
+
+Config::~Config() {}
+
