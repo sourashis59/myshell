@@ -55,12 +55,12 @@ using namespace std;
 
 int main() {
     //*TODO:
-    Config::get_instance().set_debug_mode(false);
+    Config::get_instance().set_debug_mode(true);
     
     string input;
     int pid;
     while (true) {
-        cout << "[myshell]$ ";
+        cout << "[myshell:" << SystemCallWrapper::getcwd_wrapper() << "]$ ";
         cout.flush();
         getline(cin, input);
         if (input == "exit") 
