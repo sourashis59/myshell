@@ -43,5 +43,5 @@
 | `util/lexer.cpp` | For getting tokens from input string |
 | `util/parser.cpp` | For building parse tree from tokens |
 | `util/SystemCallWrapper.cpp` | Adapter class containing wrappers for C sys calls |
-| `config.cpp` | For storing the config (for now only storing debug_mode) |
+| `config.cpp` | For storing the config |
 | `main.cpp` | Contains main function |
