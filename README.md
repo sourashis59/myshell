@@ -11,15 +11,15 @@
 
 ## Tutorial:
 - You can download the `myshell.out` binary and run the shell using `./myshell.out` command.
-- Then any command and shell operators can be ran using this shell.
+- Then any command and shell operator can be ran using this shell.
 - Example screenshot: [click on the image to zoom in]
     <img src='readme-files/shell_screenshot.png'>
 
 
 
 ## Flow:
-- From the given input command, parse tree is built
-- Then the parse tree is executed using system calls
+- From the given input command, parse tree is built.
+- Then the parse tree is executed using system calls.
 
     ### Example:
     - Command: `(cmd1 | cmd2 | cmd3) < myFile.txt | cmd4; cmd7 &; cmd5 | cmd6`
