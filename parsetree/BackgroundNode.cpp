@@ -1,7 +1,7 @@
 #pragma once
 #include "Command.cpp"
 #include "../util/SystemCallWrapper.cpp"
-#include "../config.cpp"
+#include "../config.h"
 
 class BackgroundNode: public Command {
     Command *cmd; 
@@ -10,7 +10,7 @@ public:
     BackgroundNode(Command *cmd): cmd(cmd) {}
 
     virtual void run() {
-        if (Config::get_instance().get_debug_mode() == true) {
+        if (Config::get_instance().debug_mode == true) {
             cout << "[DEBUG]: BackgroundNode.run()" << endl;
         }
 

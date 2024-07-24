@@ -10,10 +10,13 @@
 #include<sys/wait.h>
 #include <fcntl.h>
 
+#define MAX_BUFF_SIZE_FOR_CWD (1024)
+
 using namespace std;
 
 //* Contains wrapper functions wrapping the glibc sys call wrapper functions
 class SystemCallWrapper {
+
     /*
      * Given vector of string objects, converts the string objects
      * to char* and returns new vector<char *> 
@@ -113,4 +116,24 @@ public:
     static void close_wrapper(int fd) {
         if (close(fd) < 0) panic("close() sys call faield!");
     }
+
+
+    /*
+     * - Returns the current working directory.
+     * - If `getcwd()` sys call fails, returns  
+     *  "getcwd() sys call not successful!"
+     */
+    static string getcwd_wrapper() {
+        //* buffer to store current working directory of the process
+        char cwd_buffer[MAX_BUFF_SIZE_FOR_CWD];
+        string res;
+        if (getcwd(cwd_buffer, sizeof(cwd_buffer)) == nullptr){
+            cerr << "\ngetcwd() sys call not successful!" << endl;
+            res = "getcwd() sys call not successful!";
+        } else {
+            res = string(cwd_buffer);
+        }
+        return res;
+    }
 };
+

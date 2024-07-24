@@ -10,7 +10,10 @@
 
 
 ## Tutorial:
-
+- You can download the `myshell.out` binary and run the shell using `./myshell.out` command.
+- Then any command and shell operators can be ran using this shell.
+- Example screenshot:
+    <img src='readme-files/shell_screenshot.png'>
 
 
 

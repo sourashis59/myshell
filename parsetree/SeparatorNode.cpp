@@ -1,7 +1,7 @@
 #pragma once
 #include "Command.cpp"
 #include "../util/SystemCallWrapper.cpp"
-#include "../config.cpp"
+#include "../config.h"
 
 
 class SeparatorNode: public Command {
@@ -12,7 +12,7 @@ public:
     SeparatorNode(Command *leftCmd, Command *rightCmd): leftCmd(leftCmd), rightCmd(rightCmd) {}
 
     virtual void run() {
-        if (Config::get_instance().get_debug_mode() == true) {
+        if (Config::get_instance().debug_mode == true) {
             cout << "\n[DEBUG]: SeparatorNode.run()" << endl;
         }
 

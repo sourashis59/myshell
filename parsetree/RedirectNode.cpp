@@ -1,7 +1,7 @@
 #pragma once
 #include "Command.cpp"
 #include "../util/SystemCallWrapper.cpp"
-#include "../config.cpp"
+#include "../config.h"
 
 
 
@@ -29,7 +29,7 @@ public:
     }
 
     virtual void run() {
-        if (Config::get_instance().get_debug_mode() == true) {
+        if (Config::get_instance().debug_mode == true) {
             cout << "\n[DEBUG]: RedirectNode.run(file_path= " << file_path << ", redir_type: " << redir_type << ")" << endl; 
         }
         

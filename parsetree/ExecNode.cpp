@@ -1,7 +1,7 @@
 #pragma once
 #include "Command.cpp"
 #include "../util/SystemCallWrapper.cpp"
-#include "../config.cpp"
+#include "../config.h"
 
 
 class ExecNode: public Command {
@@ -14,7 +14,7 @@ public:
     }
 
     virtual void run() {
-        if (Config::get_instance().get_debug_mode() == true) {
+        if (Config::get_instance().debug_mode == true) {
             cout << "[DEBUG]: ExecNode.run(";    
             for (const string& arg: args)
                 cout << arg << " ";
@@ -23,7 +23,8 @@ public:
 
         if (args.size() && args[0].size())
             SystemCallWrapper::execvp_wrapper(args[0], args);
-        // exit(1);
+        
+        exit(0);
     }
 
     virtual void print() {
