@@ -11,6 +11,14 @@ class PipeNode: public Command {
 public:
     PipeNode(Command *left_cmd, Command *right_cmd): left_cmd(left_cmd), right_cmd(right_cmd) {}
 
+    virtual ~PipeNode() {
+        if (Config::get_instance().debug_mode == true) {
+            cout << "[DEBUG]: processId: " << SystemCallWrapper::getpid_wrapper() << ", Destructor called for " << "PipeNode" << endl;
+        }
+
+        delete left_cmd;
+        delete right_cmd;
+    }
 
     /*
      * How pipe wokrs?:

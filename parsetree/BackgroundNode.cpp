@@ -9,6 +9,13 @@ class BackgroundNode: public Command {
 public:
     BackgroundNode(Command *cmd): cmd(cmd) {}
 
+    virtual ~BackgroundNode() {
+        if (Config::get_instance().debug_mode == true) {
+            cout << "[DEBUG]: processId: " << SystemCallWrapper::getpid_wrapper() << ", Destructor called for " << "BackgroundNode" << endl;
+        }
+        delete cmd;
+    }
+
     virtual void run() {
         if (Config::get_instance().debug_mode == true) {
             cout << "[DEBUG]: BackgroundNode.run()" << endl;

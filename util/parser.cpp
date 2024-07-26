@@ -1,5 +1,6 @@
 #pragma once
 #include "lexer.cpp"
+#include "../parsetree/Parsetree.cpp"
 
 /**
  * Documentation:
@@ -218,8 +219,8 @@ public:
      * Parses the input command and returns the parse tree. 
      * Throws exception in case of syntax error.
      */
-    static Command* parse(const string &input) {
-        return ParserUtil(input).parse();
+    static ParseTree parse(const string &input) {
+        return ParseTree(ParserUtil(input).parse());
     }
 };
 

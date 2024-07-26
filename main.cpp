@@ -22,8 +22,12 @@ using namespace std;
 
 
 int main() {
-    Config::get_instance().debug_mode = false;
+    Config::get_instance().debug_mode = true;
     
+    if (Config::get_instance().debug_mode) {
+        cout << "[DEBUG]: Shell processId: " << SystemCallWrapper::getpid_wrapper() << endl;
+    }
+
     string input;
     int pid;
     while (true) {
@@ -41,19 +45,23 @@ int main() {
         if (input == "exit") 
             exit(0);
         
-        // parse command 
-        Command *command = Parser::parse(input);
+        //* parse command 
+        ParseTree parse_tree = Parser::parse(input);
 
         if (Config::get_instance().debug_mode == true) {
             cout << "parse tree: ";
-            command->print();
+            parse_tree.print();
             cout << endl;
         }
 
         pid = fork();
-        if (pid == 0)
-            command->run();
-        
+        if (pid == 0) {
+            parse_tree.run();
+        }
+
+        // //* prevent memory leak
+        // delete command;
+
         int status;
         waitpid(pid, &status, 0);
 

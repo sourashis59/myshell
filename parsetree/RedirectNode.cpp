@@ -20,6 +20,13 @@ public:
     RedirectNode(RedirectType redir_type, const string &file_path, Command *cmd = nullptr): 
         redir_type(redir_type), file_path(file_path), cmd(cmd) {}
 
+    virtual ~RedirectNode() {
+        if (Config::get_instance().debug_mode == true) {
+            cout << "[DEBUG]: processId: " << SystemCallWrapper::getpid_wrapper() << ", Destructor called for " << "RedirectNode" << endl;
+        }
+        delete cmd;
+    }
+
     void set_cmd(Command *cmd) {
         this->cmd = cmd;
     } 
