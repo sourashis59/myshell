@@ -11,6 +11,14 @@ class SeparatorNode: public Command {
 public:
     SeparatorNode(Command *leftCmd, Command *rightCmd): leftCmd(leftCmd), rightCmd(rightCmd) {}
 
+    virtual ~SeparatorNode() {
+        if (Config::get_instance().debug_mode == true) {
+            cout << "[DEBUG]: processId: " << SystemCallWrapper::getpid_wrapper() << ", Destructor called for " << "SeparatorNode" << endl;
+        }
+        delete leftCmd;
+        delete rightCmd;
+    }
+
     virtual void run() {
         if (Config::get_instance().debug_mode == true) {
             cout << "\n[DEBUG]: SeparatorNode.run()" << endl;

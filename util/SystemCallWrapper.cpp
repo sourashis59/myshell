@@ -6,9 +6,9 @@
 #include<stdlib.h>
 #include<iostream>
 #include<unistd.h>
-#include <sys/types.h>
+#include<sys/types.h>
 #include<sys/wait.h>
-#include <fcntl.h>
+#include<fcntl.h>
 
 #define MAX_BUFF_SIZE_FOR_CWD (1024)
 
@@ -33,6 +33,13 @@ class SystemCallWrapper {
 
 public:
 
+    /*
+     * Returns process id  
+     */
+    static pid_t getpid_wrapper() {
+        return getpid();
+    }
+    
     /*
     *- Print error message to standard error, and exits with status code 1
     */

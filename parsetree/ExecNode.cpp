@@ -13,6 +13,14 @@ public:
             strip_quotes(arg);
     }
 
+    virtual ~ExecNode() {
+        if (Config::get_instance().debug_mode == true) {
+            cout << "[DEBUG]: processId: " << SystemCallWrapper::getpid_wrapper() << ", Destructor called for " << "ExecNode" << endl;
+        }
+
+    }
+
+
     virtual void run() {
         if (Config::get_instance().debug_mode == true) {
             cout << "[DEBUG]: ExecNode.run(";    
