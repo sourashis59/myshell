@@ -1,6 +1,5 @@
 #include "config.h"
 
-
 unordered_map<Config::PROMPT_COLOR, string> Config::PROMPT_COLOR_CODE = {
     {DEFAULT, "\033[0m"},    
     {GREEN, "\033[32m"},   
@@ -20,9 +19,14 @@ unordered_map<Config::PROMPT_COLOR, string> Config::PROMPT_COLOR_CODE = {
     {LIGHT_WHITE, "\033[97m"} 
 };
 
-Config& Config::get_instance() {
-    //* Static instance created once
-    static Config instance; 
+Config* Config::instance = nullptr;
+
+Config* Config::get_instance() {
+    //* since, only one thread (of shell process) will access
+    //* no need to use locks
+    if (instance == nullptr) {
+        instance = new Config();
+    }
     return instance;
 }
 
@@ -31,6 +35,7 @@ Config::Config() {
     debug_mode = false;
     prompt_color_code = Config::PROMPT_COLOR_CODE[PROMPT_COLOR::LIGHT_CYAN];
     prompt_cwd_color_code = Config::PROMPT_COLOR_CODE[PROMPT_COLOR::LIGHT_GREEN];
+    debug_color = Config::PROMPT_COLOR_CODE[PROMPT_COLOR::YELLOW];
 }
 
 

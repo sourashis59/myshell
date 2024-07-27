@@ -2,6 +2,7 @@
 #include "Command.cpp"
 #include "../util/SystemCallWrapper.cpp"
 #include "../config.h"
+#include "../util/Logger.h"
 
 
 
@@ -21,8 +22,8 @@ public:
         redir_type(redir_type), file_path(file_path), cmd(cmd) {}
 
     virtual ~RedirectNode() {
-        if (Config::get_instance().debug_mode == true) {
-            cout << "[DEBUG]: processId: " << SystemCallWrapper::getpid_wrapper() << ", Destructor called for " << "RedirectNode" << endl;
+        if (Config::get_instance()->debug_mode == true) {
+            Logger::get_instance()->log("Destructor called for RedirectNode");
         }
         delete cmd;
     }
@@ -36,8 +37,8 @@ public:
     }
 
     virtual void run() {
-        if (Config::get_instance().debug_mode == true) {
-            cout << "\n[DEBUG]: RedirectNode.run(file_path= " << file_path << ", redir_type: " << redir_type << ")" << endl; 
+        if (Config::get_instance()->debug_mode == true) {
+            Logger::get_instance()->log("RedirectNode.run(file_path= " + file_path + ", redir_type: " + to_string(redir_type) + ")");
         }
         
         int target_fd = -1;
