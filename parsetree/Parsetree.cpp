@@ -12,9 +12,7 @@ public:
     ParseTree(Command *command): command(command) {}
 
     virtual ~ParseTree() {
-        if (Config::get_instance()->debug_mode == true) {
-            Logger::get_instance()->log("Destructor called for ParseTree");
-        }
+        Logger::get_instance()->log("Destructor called for ParseTree");
         delete command;
     }
 

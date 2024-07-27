@@ -22,9 +22,7 @@ public:
         redir_type(redir_type), file_path(file_path), cmd(cmd) {}
 
     virtual ~RedirectNode() {
-        if (Config::get_instance()->debug_mode == true) {
-            Logger::get_instance()->log("Destructor called for RedirectNode");
-        }
+        Logger::get_instance()->log("Destructor called for RedirectNode");
         delete cmd;
     }
 
@@ -37,9 +35,7 @@ public:
     }
 
     virtual void run() {
-        if (Config::get_instance()->debug_mode == true) {
-            Logger::get_instance()->log("RedirectNode.run(file_path= " + file_path + ", redir_type: " + to_string(redir_type) + ")");
-        }
+        Logger::get_instance()->log("RedirectNode.run(file_path= " + file_path + ", redir_type: " + to_string(redir_type) + ")");
         
         int target_fd = -1;
         int source_fd = -1;

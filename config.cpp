@@ -16,7 +16,8 @@ unordered_map<Config::PROMPT_COLOR, string> Config::PROMPT_COLOR_CODE = {
     {LIGHT_BLUE, "\033[94m"}, 
     {LIGHT_MAGENTA, "\033[95m"},
     {LIGHT_CYAN, "\033[96m"}, 
-    {LIGHT_WHITE, "\033[97m"} 
+    {LIGHT_WHITE, "\033[97m"},
+    {NO_COLOR, ""}
 };
 
 Config* Config::instance = nullptr;
@@ -33,6 +34,7 @@ Config* Config::get_instance() {
 Config::Config() {
     //* default
     debug_mode = false;
+    debug_color_enabled = true;
     prompt_color_code = Config::PROMPT_COLOR_CODE[PROMPT_COLOR::LIGHT_CYAN];
     prompt_cwd_color_code = Config::PROMPT_COLOR_CODE[PROMPT_COLOR::LIGHT_GREEN];
     debug_color = Config::PROMPT_COLOR_CODE[PROMPT_COLOR::YELLOW];

@@ -14,6 +14,7 @@
 #include<unistd.h>
 #include <sys/types.h>
 #include<sys/wait.h>
+#include<fstream>
 
 #include <thread>
 #include <chrono>
@@ -24,12 +25,14 @@ using namespace std;
 
 int main() {
     Config* config = Config::get_instance(); 
-    config->debug_mode = true;
-    
-    if (config->debug_mode) {
-        Logger::get_instance()->log("Shell Process started!");
-    }
+    Logger *logger = Logger::get_instance();
 
+    config->debug_mode = true;
+    config->debug_color_enabled = false;
+    ofstream log_file_stream("log.txt");
+    logger->set_output_stream(&log_file_stream);
+
+    logger->log("Shell Process started!");
     string input;
     int pid;
     while (true) {
@@ -67,9 +70,7 @@ int main() {
         int status;
         waitpid(pid, &status, 0);
 
-        if (config->debug_mode == true) {
-            Logger::get_instance()->log("All child process finished");
-        }
+        logger->log("All child process finished");
     }
 }
 

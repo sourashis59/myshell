@@ -13,17 +13,13 @@ public:
     SeparatorNode(Command *leftCmd, Command *rightCmd): leftCmd(leftCmd), rightCmd(rightCmd) {}
 
     virtual ~SeparatorNode() {
-        if (Config::get_instance()->debug_mode == true) {
-            Logger::get_instance()->log("Destructor called for SeparatorNode");
-        }
+        Logger::get_instance()->log("Destructor called for SeparatorNode");
         delete leftCmd;
         delete rightCmd;
     }
 
     virtual void run() {
-        if (Config::get_instance()->debug_mode == true) {
-            Logger::get_instance()->log("SeparatorNode.run()");
-        }
+        Logger::get_instance()->log("SeparatorNode.run()");
 
         //* Create a child process and run the first command.
         //* Creating new process is required, otherwise files descriptors of 

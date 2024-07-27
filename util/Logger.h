@@ -30,14 +30,22 @@ public:
     }
 
     void log(const string &message) {
+        if (!config->debug_mode)
+            return;
+
+        if (config->debug_color_enabled) 
+            (*output_stream) << config->debug_color;
+
         (*output_stream) 
-            << config->debug_color 
             << "[DEBUG][ProcessId: " 
             << SystemCallWrapper::getpid_wrapper()
             << "]: "
-            << message 
-            << Config::PROMPT_COLOR_CODE[Config::PROMPT_COLOR::DEFAULT] << "\n";
+            << message;
         
+        if (config->debug_color_enabled)
+            (*output_stream) << Config::PROMPT_COLOR_CODE[Config::PROMPT_COLOR::DEFAULT];
+        
+        (*output_stream)<< "\n";
         output_stream->flush();
     }
 
