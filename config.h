@@ -29,10 +29,13 @@ public:
     bool debug_mode;
     string prompt_color_code;
     string prompt_cwd_color_code;
- 
+    string debug_color;
+    
+    static Config* instance;
+    static Config* get_instance();
+    
     static unordered_map<PROMPT_COLOR, string> PROMPT_COLOR_CODE;
 
-    static Config& get_instance();
 
     // int get_debug_mode() const;
     // void set_debug_mode(bool mode);

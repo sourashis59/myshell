@@ -2,6 +2,7 @@
 #include "Command.cpp"
 #include "../util/SystemCallWrapper.cpp"
 #include "../config.h"
+#include "../util/Logger.h"
 
 class BackgroundNode: public Command {
     Command *cmd; 
@@ -10,15 +11,15 @@ public:
     BackgroundNode(Command *cmd): cmd(cmd) {}
 
     virtual ~BackgroundNode() {
-        if (Config::get_instance().debug_mode == true) {
-            cout << "[DEBUG]: processId: " << SystemCallWrapper::getpid_wrapper() << ", Destructor called for " << "BackgroundNode" << endl;
+        if (Config::get_instance()->debug_mode == true) {
+            Logger::get_instance()->log("Destructor called for BackgroundNode");
         }
         delete cmd;
     }
 
     virtual void run() {
-        if (Config::get_instance().debug_mode == true) {
-            cout << "[DEBUG]: BackgroundNode.run()" << endl;
+        if (Config::get_instance()->debug_mode == true) {
+            Logger::get_instance()->log("BackgroundNode.run()");
         }
 
         //* child process will execute the command (may be composite command)

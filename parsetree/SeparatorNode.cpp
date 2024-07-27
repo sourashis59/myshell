@@ -2,6 +2,7 @@
 #include "Command.cpp"
 #include "../util/SystemCallWrapper.cpp"
 #include "../config.h"
+#include "../util/Logger.h"
 
 
 class SeparatorNode: public Command {
@@ -12,16 +13,16 @@ public:
     SeparatorNode(Command *leftCmd, Command *rightCmd): leftCmd(leftCmd), rightCmd(rightCmd) {}
 
     virtual ~SeparatorNode() {
-        if (Config::get_instance().debug_mode == true) {
-            cout << "[DEBUG]: processId: " << SystemCallWrapper::getpid_wrapper() << ", Destructor called for " << "SeparatorNode" << endl;
+        if (Config::get_instance()->debug_mode == true) {
+            Logger::get_instance()->log("Destructor called for SeparatorNode");
         }
         delete leftCmd;
         delete rightCmd;
     }
 
     virtual void run() {
-        if (Config::get_instance().debug_mode == true) {
-            cout << "\n[DEBUG]: SeparatorNode.run()" << endl;
+        if (Config::get_instance()->debug_mode == true) {
+            Logger::get_instance()->log("SeparatorNode.run()");
         }
 
         //* Create a child process and run the first command.
@@ -35,7 +36,7 @@ public:
         //* for child to finish. Then the child second process will be executed
         int status = SystemCallWrapper::wait_wrapper(pid);
         if (status != 0)  {
-            cerr << "\n[Error]: Separator operator's left command returned status: " << status;
+            cerr << Config::get_instance()->debug_color << "[Error]: Separator operator's left command returned status: " << status;
             cerr.flush();
         }
         

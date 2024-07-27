@@ -2,6 +2,7 @@
 #include "Command.cpp"
 #include "../util/SystemCallWrapper.cpp"
 #include "../config.h"
+#include "../util/Logger.h"
 
 
 class PipeNode: public Command {
@@ -12,8 +13,8 @@ public:
     PipeNode(Command *left_cmd, Command *right_cmd): left_cmd(left_cmd), right_cmd(right_cmd) {}
 
     virtual ~PipeNode() {
-        if (Config::get_instance().debug_mode == true) {
-            cout << "[DEBUG]: processId: " << SystemCallWrapper::getpid_wrapper() << ", Destructor called for " << "PipeNode" << endl;
+        if (Config::get_instance()->debug_mode == true) {
+            Logger::get_instance()->log("Destructor called for PipeNode");
         }
 
         delete left_cmd;
@@ -141,8 +142,8 @@ public:
      * 
      */
     virtual void run() {
-        if (Config::get_instance().debug_mode == true) {
-            cout << "\n[DEBUG]: PipeNode.run()" << endl;
+        if (Config::get_instance()->debug_mode == true) {
+            Logger::get_instance()->log("PipeNode.run()");
         }
 
         pair<int, int> pipe_fds = SystemCallWrapper::pipe_wrapper();
@@ -201,8 +202,8 @@ public:
         if (left_status == 0 && right_status == 0) { 
             exit(0);
         } else {
-            if (Config::get_instance().debug_mode == true) {
-                cerr << "\n[ERROR]: pipe operator's operands did not exit properly. Left Status: " << left_status << ", Right Status: " << right_status << endl;
+            if (Config::get_instance()->debug_mode == true) {
+                Logger::get_instance()->log("[ERROR]: pipe operator's operands did not exit properly. Left Status: " + to_string(left_status) + ", Right Status: " + to_string(right_status));
             }
             exit(1);
         } 

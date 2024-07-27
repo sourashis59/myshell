@@ -1,6 +1,7 @@
 #pragma once
 #include "Command.cpp"
 #include "../util/SystemCallWrapper.cpp"
+#include "../util/Logger.h"
 #include "../config.h"
 
 
@@ -14,19 +15,21 @@ public:
     }
 
     virtual ~ExecNode() {
-        if (Config::get_instance().debug_mode == true) {
-            cout << "[DEBUG]: processId: " << SystemCallWrapper::getpid_wrapper() << ", Destructor called for " << "ExecNode" << endl;
+        if (Config::get_instance()->debug_mode == true) {
+            Logger::get_instance()->log("Destructor called for ExecNode");
         }
 
     }
 
 
     virtual void run() {
-        if (Config::get_instance().debug_mode == true) {
-            cout << "[DEBUG]: ExecNode.run(";    
+        if (Config::get_instance()->debug_mode == true) {
+            string message = "ExecNode.run(";
             for (const string& arg: args)
-                cout << arg << " ";
-            cout << ")" << endl;
+                message += arg + " ";
+            
+            message += ")";
+            Logger::get_instance()->log(message);
         }
 
         if (args.size() && args[0].size())
