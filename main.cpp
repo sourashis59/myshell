@@ -50,27 +50,31 @@ int main() {
         if (input == "exit") 
             exit(0);
         
-        //* parse command 
-        ParseTree parse_tree = Parser::parse(input);
+        try {
+            //* parse command 
+            ParseTree parse_tree = Parser::parse(input);
+            
+            if (config->debug_mode == true) {
+                cout << config->debug_color << "[DEBUG]: parse tree: ";
+                parse_tree.print();
+                cout << Config::PROMPT_COLOR_CODE[Config::PROMPT_COLOR::DEFAULT] << endl;
+            }
 
-        if (config->debug_mode == true) {
-            cout << config->debug_color << "[DEBUG]: parse tree: ";
-            parse_tree.print();
-            cout << Config::PROMPT_COLOR_CODE[Config::PROMPT_COLOR::DEFAULT] << endl;
+            pid = fork();
+            if (pid == 0) {
+                parse_tree.run();
+            }
+
+            // //* prevent memory leak
+            // delete command;
+
+            int status;
+            waitpid(pid, &status, 0);
+
+            logger->log("All child process finished");
+        } catch (const runtime_error &error) {
+            cout << "[Syntax Error]: " << error.what() << endl;
         }
-
-        pid = fork();
-        if (pid == 0) {
-            parse_tree.run();
-        }
-
-        // //* prevent memory leak
-        // delete command;
-
-        int status;
-        waitpid(pid, &status, 0);
-
-        logger->log("All child process finished");
     }
 }
 
