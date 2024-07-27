@@ -8,6 +8,7 @@ using namespace std;
 class Config {
 public:
     enum PROMPT_COLOR {
+        NO_COLOR,
         DEFAULT,
         GREEN,
         BLUE,
@@ -30,6 +31,8 @@ public:
     string prompt_color_code;
     string prompt_cwd_color_code;
     string debug_color;
+    bool debug_color_enabled;
+
     
     static Config* instance;
     static Config* get_instance();

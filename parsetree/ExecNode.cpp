@@ -15,23 +15,20 @@ public:
     }
 
     virtual ~ExecNode() {
-        if (Config::get_instance()->debug_mode == true) {
-            Logger::get_instance()->log("Destructor called for ExecNode");
-        }
-
+        Logger::get_instance()->log("Destructor called for ExecNode");
     }
 
 
     virtual void run() {
-        if (Config::get_instance()->debug_mode == true) {
-            string message = "ExecNode.run(";
-            for (const string& arg: args)
-                message += arg + " ";
-            
-            message += ")";
-            Logger::get_instance()->log(message);
-        }
+        //* log debug message
+        string message = "ExecNode.run(";
+        for (const string& arg: args)
+            message += arg + " ";
+        
+        message += ")";
+        Logger::get_instance()->log(message);
 
+        //* create new process if atleast one argument for command is present
         if (args.size() && args[0].size())
             SystemCallWrapper::execvp_wrapper(args[0], args);
         

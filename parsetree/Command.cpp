@@ -16,9 +16,7 @@
 class Command {
 public:
     virtual ~Command() {
-        if (Config::get_instance()->debug_mode == true) {
-            Logger::get_instance()->log("Destructor called for Command");
-        }
+        Logger::get_instance()->log("Destructor called for Command");
     }
 
     //* this run() functin should never return.

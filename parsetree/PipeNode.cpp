@@ -13,10 +13,7 @@ public:
     PipeNode(Command *left_cmd, Command *right_cmd): left_cmd(left_cmd), right_cmd(right_cmd) {}
 
     virtual ~PipeNode() {
-        if (Config::get_instance()->debug_mode == true) {
-            Logger::get_instance()->log("Destructor called for PipeNode");
-        }
-
+        Logger::get_instance()->log("Destructor called for PipeNode");
         delete left_cmd;
         delete right_cmd;
     }
@@ -142,9 +139,7 @@ public:
      * 
      */
     virtual void run() {
-        if (Config::get_instance()->debug_mode == true) {
-            Logger::get_instance()->log("PipeNode.run()");
-        }
+        Logger::get_instance()->log("PipeNode.run()");
 
         pair<int, int> pipe_fds = SystemCallWrapper::pipe_wrapper();
         int pipe_read_fd = pipe_fds.first;
@@ -202,9 +197,7 @@ public:
         if (left_status == 0 && right_status == 0) { 
             exit(0);
         } else {
-            if (Config::get_instance()->debug_mode == true) {
-                Logger::get_instance()->log("[ERROR]: pipe operator's operands did not exit properly. Left Status: " + to_string(left_status) + ", Right Status: " + to_string(right_status));
-            }
+            Logger::get_instance()->log("[ERROR]: pipe operator's operands did not exit properly. Left Status: " + to_string(left_status) + ", Right Status: " + to_string(right_status));
             exit(1);
         } 
     }
