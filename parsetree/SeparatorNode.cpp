@@ -32,7 +32,7 @@ public:
         //* for child to finish. Then the child second process will be executed
         int status = SystemCallWrapper::wait_wrapper(pid);
         if (status != 0)  {
-            cerr << Config::get_instance()->debug_color << "[Error]: Separator operator's left command returned status: " << status;
+            cerr << Config::get_instance()->debug_color << "[Error]: Separator operator's left command returned status: " << status << endl;
             cerr.flush();
         }
         
