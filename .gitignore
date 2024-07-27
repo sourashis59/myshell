@@ -1,4 +1,6 @@
 *.out
+!myshell.out
+
 ref.c
 ref1.c
 test-programs/test.txt
