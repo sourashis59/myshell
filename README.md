@@ -1,7 +1,7 @@
 # myshell
-- A POSIX shell implementation in C++
-- Can parse and execute commands
-- Supported shell operators: 
+- A POSIX shell implementation in C++.
+- Can parse and execute commands.
+- Currently supported shell operators: 
     - Pipe `|`
     - I/O redirection `<`, `>`, `>>`
     - Background `&`
@@ -10,7 +10,7 @@
 
 
 ## Tutorial:
-- You can download the `myshell.out` binary and run the shell using `./myshell.out` command.
+- You can download the `myshell.out` binary and run the shell using `./myshell.out` command. [Or compile the source code using make]
 - Then any command and shell operator can be run using this shell.
 - Example screenshot: [click on the image to zoom in]
     <img src='readme-files/shell_screenshot.png'>
@@ -46,3 +46,26 @@
 | `util/SystemCallWrapper.cpp` | Adapter class containing wrappers for C sys calls |
 | `config.cpp` | For storing the config |
 | `main.cpp` | Contains main function |
+
+## Grammar Rules:
+```
+LINE --> null
+    or, BACK
+    or, BACK ';' LINE
+
+BACK --> PIPE '&'
+    or, PIPE
+
+PIPE --> EXEC '|' PIPE
+    or, EXEC
+
+EXEC --> '(' LINE ')' REDIRECTS
+    or, COMMANDARGS REDIRECTS
+
+REDIRECTS --> null
+        or, '<' FILEPATH
+        or, '>' FILEPATH
+        or, '>>' FILEPATH 
+
+COMMANDARGS --> {token with supported characters for word}
+```
