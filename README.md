@@ -1,5 +1,5 @@
 # myshell
-- A POSIX shell implementation in C++.
+- A POSIX shell implementation in C++ [Similar to `bash` shell]
 - Can parse and execute commands.
 - Currently supported shell operators: 
     - Pipe `|`
